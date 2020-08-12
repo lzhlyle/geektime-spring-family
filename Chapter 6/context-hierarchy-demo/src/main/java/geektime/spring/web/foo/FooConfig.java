@@ -10,16 +10,16 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class FooConfig {
     @Bean
     public TestBean testBeanX() {
-        return new TestBean("foo");
+        return new TestBean("foo from annotation x");
     }
 
     @Bean
     public TestBean testBeanY() {
-        return new TestBean("foo");
+        return new TestBean("foo from annotation y");
     }
 
-    @Bean
-    public FooAspect fooAspect() {
-        return new FooAspect();
-    }
+//    @Bean
+//    public FooAspect fooAspect() {
+//        return new FooAspect();
+//    }
 }

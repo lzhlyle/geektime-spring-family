@@ -20,18 +20,18 @@ public class ContextHierarchyDemoApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		ApplicationContext fooContext = new AnnotationConfigApplicationContext(FooConfig.class);
-		ClassPathXmlApplicationContext barContext = new ClassPathXmlApplicationContext(
-				new String[] {"applicationContext.xml"}, fooContext);
-		TestBean bean = fooContext.getBean("testBeanX", TestBean.class);
-		bean.hello();
+		ApplicationContext fooAnnotationContext = new AnnotationConfigApplicationContext(FooConfig.class);
+		ApplicationContext barXmlContext = new ClassPathXmlApplicationContext(
+				new String[] {"applicationContext.xml"}, fooAnnotationContext); // (locations, parent)
+		TestBean parentBean = fooAnnotationContext.getBean("testBeanX", TestBean.class);
+		parentBean.hello();
 
 		log.info("=============");
 
-		bean = barContext.getBean("testBeanX", TestBean.class);
-		bean.hello();
+		TestBean subBean = barXmlContext.getBean("testBeanX", TestBean.class);
+		subBean.hello();
 
-		bean = barContext.getBean("testBeanY", TestBean.class);
-		bean.hello();
+		subBean = barXmlContext.getBean("testBeanY", TestBean.class); // sub(xml) 中没有，取 parent(annotation) 找
+		subBean.hello();
 	}
 }
